@@ -4,22 +4,29 @@ class database
     protected $con;
 
     public function connect()
-    {
+{
+    if (!defined('DB_SERVER')) {
         define('DB_SERVER', 'localhost');
-        define('DB_USER', 'root');
-        define('DB_PASS', '');
-        define('DB_NAME', 'newportuniversity');
-
-        $this->con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
-
-        if ($this->con == false) {
-            die("Database Not Connected: " . mysqli_connect_error());
-        } else {
-            // echo"connected";
-        }
-
-        return $this->con; // Connection ko return kar rahe hain
     }
+    if (!defined('DB_USER')) {
+        define('DB_USER', 'root');
+    }
+    if (!defined('DB_PASS')) {
+        define('DB_PASS', '');
+    }
+    if (!defined('DB_NAME')) {
+        define('DB_NAME', 'newportuniversity');
+    }
+
+    $this->con = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME);
+
+    if ($this->con == false) {
+        die("Database Not Connected: " . mysqli_connect_error());
+    }
+
+    return $this->con;
+}
+
 }
 
 
@@ -113,47 +120,53 @@ class serarchingstudent extends showstudentrecord
         $con = $this->connect();
 
         if (isset($_POST['submit'])) {
-            $seraching = $_POST['serch'];
-            $search = "SELECT * FROM student WHERE student_id LIKE '$seraching'";
-            $result = mysqli_query($con, $search);
-            if ($result) {
-                if (mysqli_num_rows($result) > 0) {
-                    echo '<thead>
-                      <tr>
-                   <th>Student Id</th>
-                   <th>Student Name</th>
-                   <th>Student Last Name</th>
-                   <th>Student Date of Birth</th>
-                   <th>Student Gender</th>
-                  <th>Student Email</th>
-                   <th>Student Address</th>
-                   <th>Student Phone No</th>
-                  <th>Student Program</th>
-                   <th>Enrollment Date</th>
-                 </tr>
-                     </thead>';
-                     $row = mysqli_fetch_assoc($result);
-                     echo '<tbody>
-                     <tr>
-                      <td>'.$row['student_id'].'</td>
-                      <td>'.$row['first_name'].'</td>
-                      <td>'.$row['last_name'].'</td>
-                      <td>'.$row['date_of_birth'].'</td>
-                      <td>'.$row['gender'].'</td>
-                      <td>'.$row['email'].'</td>
-                      <td>'.$row['address'].'</td>
-                      <td>'.$row['phone'].'</td>
-                      <td>'.$row['program_id'].'</td>
-                      <td>'.$row['enrollment_date'].'</td>
-                     </tr>                     
-                     </tbody> ';
+            $seraching = $_POST['search'];  // Search input (assumed to be student_id)
+            $search = "SELECT * FROM student WHERE student_id = ?";  // Query to find a student by ID
 
-                }else{
-                    echo"<h2>Data Not Found</h2>";
-                }
+            // Use prepared statements for security
+            $stmt = $con->prepare($search);
+            $stmt->bind_param("i", $seraching);  // Assuming student_id is an integer
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            // Check if we got a result
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();  // Fetch single row
+                echo '<thead>
+                        <tr>
+                            <th>Student Id</th>
+                            <th>Student Name</th>
+                            <th>Student Last Name</th>
+                            <th>Student Date of Birth</th>
+                            <th>Student Gender</th>
+                            <th>Student Email</th>
+                            <th>Student Address</th>
+                            <th>Student Phone No</th>
+                            <th>Student Program</th>
+                            <th>Enrollment Date</th>
+                        </tr>
+                      </thead>';
+                echo '<tbody>
+                        <tr>
+                            <td>' . $row['student_id'] . '</td>
+                            <td>' . $row['first_name'] . '</td>
+                            <td>' . $row['last_name'] . '</td>
+                            <td>' . $row['date_of_birth'] . '</td>
+                            <td>' . $row['gender'] . '</td>
+                            <td>' . $row['email'] . '</td>
+                            <td>' . $row['address'] . '</td>
+                            <td>' . $row['phone'] . '</td>
+                            <td>' . $row['program_id'] . '</td>
+                            <td>' . $row['enrollment_date'] . '</td>
+                        </tr>
+                      </tbody>';
+            } else {
+                echo "<h2>Data Not Found</h2>";
             }
         } else {
-            echo "error";
+            echo "Search form not submitted.";
         }
     }
 }
+
+
