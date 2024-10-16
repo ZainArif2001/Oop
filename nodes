@@ -1,0 +1,46 @@
+what is class ?
+class ak blueprint hoti or template bhe kha ja tha hai is may hum method or properties ko define kartay hai.
+or isko blueprint isleya kha ja tha hain Q kay Ap Ak building banaa rahy ho tw us may Deisgn Banana thay Ho.
+or Structure Banana thay Ho..
+Tw Aesi he Hum Koo programming May Attitbuties Bananay Hotay ha Or Method define karnay Hotay ...
+
+How Many type Of Access Modifer ;
+
+Three type Of Access Modifer..
+1)Public.
+2)Protected.
+3)Private.
+
+Public :
+        Ka matlab hota ha Kay Ap is koo kahe pay Access kar sakhu matlab ap nay ak function banaya employee_details ka ..
+        tw ab us koo class may Access kar sakthy ho ya class Kay bahar bhe Access kar sakthy ha ho.
+
+Protected :
+            Protected ka matlab hota ha kay hum us class may he Access kar sakhtay jis class may ho or class kay bahre Access nhi kar sakhtay .
+            lakin Hum isko Extend kar kay bhe Access kar sakthy hai..
+
+Private :
+          Private ka matlab ya hota ha kay hum us koo class may he Access kar sakhtay na class kay bahar na class Extend kara kay ..
+
+How Many Pilars In Oop?
+
+Is kay Four Pilars Hain.
+1)Encapsulation
+2)Inheritance
+3)Polymorphisum  
+4)Abstraction  
+
+Encapsulation :
+                Encapsulation ka matlab hai data aur methods ko ek unit (class) ke andar band karna. Isse data ki security badhti hai
+                Aur unnecessary access se bachaya jata hai...
+
+Inheritance :
+             Inheritance mean ak class koo dousri class say Inheritance karna matlab presnet class or child class....
+
+
+Polymorphisum :
+            Polymorphism ka matlab hai ek method ko alag-alag classes me alag-alag tareeke se implement karna. 
+            Ye overloading aur overriding ke zariye achieve hota hai.
+            Isse ek hi function ya method ko alag objects ke liye different tareeke se behave karne diya jata hai.
+            
+            
